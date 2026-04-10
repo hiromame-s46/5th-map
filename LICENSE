@@ -186,7 +186,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+   Copyright 2026 hiromame.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -205,9 +205,10 @@
 追加条項（画像データの著作権について）
 
 本リポジトリに含まれる HTML 内の base64 形式で埋め込まれた画像データ
-（以下「画像データ」といいます）の著作権は、当該画像データの作成者に
-帰属します。
+（以下「画像データ」といいます）の著作権は、櫻坂46運営その他の正当な
+権利者に帰属します。リポジトリ作成者には、かかる画像データの著作権は
+一切帰属しません。
 
-Apache License, Version 2.0 はソースコード部分に適用されますが、
-画像データ自体の著作権を移転・放棄するものではありません。
-
+Apache License, Version 2.0 は、リポジトリ作成者が著作権を有する
+ソースコード部分にのみ適用されます。画像データ自体の著作権を移転・
+放棄またはライセンスするものではありません。
