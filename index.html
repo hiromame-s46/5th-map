@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>櫻坂46 5th YEAR ANNIVERSARY 会場マップ</title>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; background:#f4a6b8; color:#333; }
@@ -19,20 +20,47 @@ header h3 { font-size:14px; letter-spacing:2px; }
 @media (hover:hover) { .hotspot:hover { background:rgba(255,255,255,0.08); } }
 
 /* popup */
-.sheet { position:fixed; left:0; right:0; bottom:-100%; background:white; border-radius:20px 20px 0 0; box-shadow:0 -4px 20px rgba(0,0,0,.2); transition:bottom .3s ease; z-index:100; max-height:75vh; overflow:auto; }
+.sheet { position:fixed; left:0; right:0; bottom:-100%; background:#fff; border-radius:24px 24px 0 0; box-shadow:0 -6px 32px rgba(0,0,0,.18); transition:bottom .35s cubic-bezier(.4,0,.2,1); z-index:100; max-height:82vh; overflow-y:auto; overflow-x:hidden; }
 .sheet.open { bottom:0; }
-.sheet-inner { padding:20px; }
-.sheet-bar { width:40px; height:4px; background:#ddd; border-radius:2px; margin:0 auto 16px; }
-.sheet h3 { font-size:20px; margin-bottom:12px; color:#e36291; }
+.sheet-inner { padding:20px 20px 36px; }
+.sheet-bar { width:36px; height:4px; background:#e0e0e0; border-radius:2px; margin:0 auto 20px; }
+.sheet-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; gap:12px; }
+.sheet-title-wrap { flex:1; }
+.sheet-badge { display:inline-block; font-size:10px; font-weight:700; letter-spacing:.8px; text-transform:uppercase; color:#e36291; background:#ffe8f2; padding:3px 8px; border-radius:20px; margin-bottom:6px; }
+.sheet h3 { font-size:20px; font-weight:800; color:#1a1a1a; line-height:1.3; margin:0; }
+.close-btn { flex-shrink:0; background:#f5f5f5; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#666; margin-top:2px; }
+.close-btn:hover { background:#ebebeb; }
+.divider { height:1px; background:#f0f0f0; margin:14px 0; }
+.time-chip { display:inline-flex; align-items:center; gap:6px; font-size:15px; font-weight:700; color:#444; background:#f5f5f5; padding:6px 12px; border-radius:20px; margin-bottom:14px; }
+.time-chip i { width:16px; height:16px; }
 .row { margin:12px 0; }
-.row-label { font-size:12px; color:#888; margin-bottom:4px; display:flex; align-items:center; gap:6px; }
-.row-content { font-size:15px; line-height:1.6; }
-.link-btn { display:block; width:100%; padding:14px; background:#e36291; color:white; text-align:center; border-radius:12px; text-decoration:none; font-weight:600; margin-top:16px; }
-.close-btn { position:absolute; top:12px; right:16px; background:#f5f5f5; border:none; width:32px; height:32px; border-radius:50%; font-size:18px; cursor:pointer; }
-.overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); opacity:0; pointer-events:none; transition:.3s; z-index:99; }
+.row-label { font-size:11px; font-weight:700; color:#aaa; text-transform:uppercase; letter-spacing:.7px; margin-bottom:6px; display:flex; align-items:center; gap:5px; }
+.row-label i { width:13px; height:13px; }
+.row-content { font-size:15px; line-height:1.75; color:#333; }
+.sheet-actions { margin-top:20px; display:flex; flex-direction:column; gap:12px; }
+.link-btn { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px 16px; background:linear-gradient(135deg,#e36291,#d44e7e); color:white; text-align:center; border-radius:14px; text-decoration:none; font-weight:700; font-size:15px; box-shadow:0 3px 10px rgba(227,98,145,.3); }
+.link-btn:active { opacity:.85; }
+.link-btn i { width:16px; height:16px; flex-shrink:0; }
+.link-btn-sub { display:flex; align-items:center; justify-content:center; gap:6px; width:100%; padding:10px 14px; background:#f8f8f8; color:#666; text-align:center; border-radius:12px; text-decoration:none; font-weight:600; font-size:13px; border:1.5px solid #e8e8e8; }
+.link-btn-sub:active { background:#f0f0f0; }
+.link-btn-sub i { width:13px; height:13px; flex-shrink:0; }
+#s-links { display:flex; flex-direction:column; gap:14px; }
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); opacity:0; pointer-events:none; transition:.3s; z-index:99; backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); }
 .overlay.show { opacity:1; pointer-events:auto; }
-.info { max-width:800px; margin:12px auto 40px; background:white; padding:16px; font-size:13px; line-height:1.7; }
-.info h4 { background:#d32f2f; color:white; padding:6px 10px; margin:-16px -16px 12px; font-size:14px; }
+.info-section { max-width:800px; margin:12px auto 40px; display:flex; flex-direction:column; gap:10px; padding:0 12px; }
+.info-card { background:white; border-radius:16px; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,.07); }
+.info-card-head { display:flex; align-items:center; gap:8px; padding:11px 14px; font-size:13px; font-weight:700; background:#f9f9f9; border-bottom:1px solid #f0f0f0; color:#444; }
+.info-card-head i { width:15px; height:15px; color:#e36291; }
+.info-card--caution .info-card-head i { color:#f59e0b; }
+.info-card--note .info-card-head i { color:#6b7280; }
+.info-card-body { padding:10px 14px 12px; }
+.info-item { padding:7px 0; border-bottom:1px solid #f5f5f5; font-size:13px; line-height:1.65; }
+.info-item:last-child { border-bottom:none; padding-bottom:0; }
+.info-item-title { display:flex; align-items:center; gap:5px; font-weight:700; color:#333; margin-bottom:2px; }
+.info-item-title i { width:13px; height:13px; color:#e36291; flex-shrink:0; }
+.info-card--caution .info-item-title i { color:#f59e0b; }
+.info-item-text { color:#555; }
+.info-item-text a { color:#e36291; text-decoration:none; font-weight:600; }
 </style>
 </head>
 <body>
@@ -63,33 +91,72 @@ header h3 { font-size:14px; letter-spacing:2px; }
 
 <div class="overlay" id="overlay"></div>
 <div class="sheet" id="sheet">
-  <button class="close-btn" id="close">×</button>
   <div class="sheet-inner">
     <div class="sheet-bar"></div>
-    <h3 id="s-title"></h3>
+    <div class="sheet-header">
+      <div class="sheet-title-wrap">
+        <div class="sheet-badge">BOOTH INFO</div>
+        <h3 id="s-title"></h3>
+      </div>
+      <button class="close-btn" id="close"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
+    </div>
+    <div class="time-chip"><i data-lucide="clock"></i><span id="s-time"></span></div>
+    <div class="divider"></div>
     <div class="row">
-      <div class="row-label">🎯 何ができるか</div>
+      <div class="row-label"><i data-lucide="info"></i> 内容</div>
       <div class="row-content" id="s-what"></div>
     </div>
-    <div class="row">
-      <div class="row-label">🕒 時間</div>
-      <div class="row-content" id="s-time"></div>
+    <div class="sheet-actions">
+      <div id="s-links"></div>
+      <a href="https://platinumaps.jp/d/jns-e?schedule=3" target="_blank" rel="noopener" class="link-btn-sub">
+        <i data-lucide="map"></i>ブース間のルートを調べる
+      </a>
     </div>
-    <div id="s-links" style="margin-top:16px;"></div>
   </div>
 </div>
 
-<div class="info">
-  <h4>INFORMATION</h4>
-  <h3>その他の情報</h3>
-  <a href="https://sakurazaka46.com/s/s46/news/detail/G00200">オンラインくじ</a>の会場受け取りは特設テントにて実施されます。
-  <br><br>コラボドリンクはスタジアム場内の対象店舗で販売されます。<a href="https://sakurazaka46.com/s/s46/diary/detail/68899">詳細はこちら。</a><br>
-  <br>このサイトに掲載できていない情報があったら、DMでもリプでもいいので教えて下さい。
-  <br><br>
-  <h3>注意事項</h3>
-  周りの迷惑にならないよう、安全に配慮してお楽しみください。<br><br>
-  <h3>開発者からのお知らせ</h3>
-  ※非公式のファンサイトです。<br>最新の情報は必ず公式の発表をご確認ください。
+<div class="info-section">
+
+  <div class="info-card">
+    <div class="info-card-head"><i data-lucide="ticket"></i>その他のイベント情報</div>
+    <div class="info-card-body">
+      <div class="info-item">
+        <div class="info-item-title"><i data-lucide="gift"></i>オンラインくじ 会場受け取り</div>
+        <div class="info-item-text">特設テントにて実施。<a href="https://sakurazaka46.com/s/s46/news/detail/G00200" target="_blank" rel="noopener">詳細はこちら</a></div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title"><i data-lucide="cup-soda"></i>コラボドリンク</div>
+        <div class="info-item-text">スタジアム場内の対象店舗で販売。<a href="https://sakurazaka46.com/s/s46/diary/detail/68899" target="_blank" rel="noopener">詳細はこちら</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card info-card--caution">
+    <div class="info-card-head"><i data-lucide="triangle-alert"></i>注意事項</div>
+    <div class="info-card-body">
+      <div class="info-item">
+        <div class="info-item-title"><i data-lucide="heart-handshake"></i>マナーを守って楽しもう</div>
+        <div class="info-item-text">周りの方への配慮を忘れずに、安全に楽しみましょう。</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title"><i data-lucide="ban"></i>競技場内でのジャンプ禁止</div>
+        <div class="info-item-text">運営側から禁止との回答がありました。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-card info-card--note">
+    <div class="info-card-head"><i data-lucide="megaphone"></i>開発者から</div>
+    <div class="info-card-body">
+      <div class="info-item">
+        <div class="info-item-text">※ 非公式のファンサイトです。最新の情報は必ず公式の発表をご確認ください。</div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-text">掲載できていない情報があれば DMやリプで教えてください。</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -124,16 +191,18 @@ function openSheet(id){
       btn.target = '_blank';
       btn.rel = 'noopener';
       btn.className = 'link-btn';
-      btn.textContent = link.name;
+      btn.innerHTML = '<i data-lucide="external-link"></i>' + link.name;
       linksContainer.appendChild(btn);
     });
   }
   sheet.classList.add('open'); overlay.classList.add('show');
+  lucide.createIcons();
 }
 function closeSheet(){ sheet.classList.remove('open'); overlay.classList.remove('show'); }
 document.querySelectorAll('.hotspot').forEach(b=>b.addEventListener('click',()=>openSheet(b.dataset.id)));
 document.getElementById('close').onclick = closeSheet;
 overlay.onclick = closeSheet;
+lucide.createIcons();
 </script>
 </body>
 </html>
